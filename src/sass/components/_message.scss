@@ -1,0 +1,53 @@
+.message {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 20px;
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		color: gray;
+		font-weight: 300;
+		img {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+	}
+	&__content {
+		max-width: 80%;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		p {
+			background-color: $primary;
+			color: black;
+			padding: 10px 20px;
+			border-radius: 0px 10px 10px;
+			max-width: max-content;
+		}
+
+		a {
+			display: flex;
+			justify-content: flex-start;
+		}
+		img {
+			width: 50%;
+		}
+	}
+	&.owner {
+		flex-direction: row-reverse;
+		.message__content {
+			align-items: flex-end;
+			p {
+				background-color: $secondary;
+				border-radius: 10px 0px 10px 10px;
+			}
+			a {
+				display: flex;
+				justify-content: flex-end;
+			}
+		}
+	}
+}
