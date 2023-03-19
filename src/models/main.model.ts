@@ -1,7 +1,7 @@
 export type Chats = {
-	combinedId: Chat
+	[key: string]: Chat
 }
-type Chat = {
+export type Chat = {
 	date: any
 	lastMessage?: IMessage
 	userInfo: UserInfo

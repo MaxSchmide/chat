@@ -12,7 +12,7 @@ const Message = ({ message }: Props) => {
 	const ref = useRef<HTMLDivElement>(null)
 
 	const { currentUser, chatUser } = useSelector(
-		(state: RootState) => state.chat
+		(state: RootState) => state.user
 	)
 
 	const timestamp = message?.date

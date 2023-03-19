@@ -1,33 +1,32 @@
 import {
-	collection,
 	doc,
 	getDoc,
-	getDocs,
-	query,
 	serverTimestamp,
 	setDoc,
 	updateDoc,
-	where,
 } from "firebase/firestore"
 import React, { useState } from "react"
-import { toast } from "react-hot-toast"
 import { useSelector } from "react-redux"
 import { db } from "../firebase"
+import { useDebounce } from "../hooks/useDebounce"
 import { UserInfo } from "../models/main.model"
 import { RootState, changeChatUser, useAppDispatch } from "../store"
+import { useSearchUserQuery } from "../store/apis/chatApi"
 
 const Search = () => {
 	const [userName, setUserName] = useState("")
-	const [user, setUser] = useState<UserInfo | null>(null)
-
+	const nameOfUser = useDebounce(userName, 500)
+	const { data } = useSearchUserQuery(nameOfUser)
 	const dispatch = useAppDispatch()
-	const { currentUser } = useSelector((state: RootState) => state.chat)
+	const { currentUser } = useSelector((state: RootState) => state.user)
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserName(e.target.value)
 	}
 
 	const handleSelect = async () => {
+		let user: UserInfo | null = null
+		data?.map((u) => (user = u))
 		const combinedId =
 			currentUser!.uid > user!.uid
 				? currentUser!.uid + user!.uid
@@ -59,27 +58,8 @@ const Search = () => {
 		} catch (e) {
 			console.log(e)
 		}
-		setUser(null)
+		user = null
 		setUserName("")
-	}
-
-	const handleKey = (e: React.KeyboardEvent) => {
-		e.code === "Enter" && handleSearch()
-	}
-
-	const handleSearch = async () => {
-		const q = query(
-			collection(db, "users"),
-			where("displayName", "==", userName)
-		)
-		try {
-			const querySnapshot = await getDocs(q)
-			querySnapshot.forEach((doc) => {
-				setUser(doc.data() as UserInfo)
-			})
-		} catch (e) {
-			toast.error("Something went wrong")
-		}
 	}
 
 	return (
@@ -88,19 +68,19 @@ const Search = () => {
 				<input
 					type="text"
 					value={userName}
-					onKeyDown={(e) => handleKey(e)}
 					onChange={(e) => handleChange(e)}
 					placeholder="Find a user"
 				/>
 			</div>
-			{user && (
-				<div onClick={handleSelect} className="search__chat">
-					<img src={user?.photoURL!} alt="" />
-					<div className="search__chat__info">
-						<span>{user?.displayName}</span>
+			{data &&
+				data?.map((user) => (
+					<div onClick={handleSelect} className="search__chat" key={user.uid}>
+						<img src={user.photoURL!} alt="" />
+						<div className="search__chat__info">
+							<span>{user.displayName}</span>
+						</div>
 					</div>
-				</div>
-			)}
+				))}
 		</div>
 	)
 }

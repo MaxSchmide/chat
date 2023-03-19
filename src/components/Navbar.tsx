@@ -4,7 +4,7 @@ import { auth } from "../firebase"
 import { RootState, logOut, useAppDispatch } from "../store"
 
 const Navbar = () => {
-	const { currentUser } = useSelector((state: RootState) => state.chat)
+	const { currentUser } = useSelector((state: RootState) => state.user)
 	const dispatch = useAppDispatch()
 	const handleLogout = () => {
 		signOut(auth)

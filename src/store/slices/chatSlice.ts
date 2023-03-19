@@ -13,8 +13,8 @@ const initialState: InitialState = {
 	chatUser: null,
 }
 
-const chatSlice = createSlice({
-	name: "chat",
+const userSlice = createSlice({
+	name: "user",
 	initialState,
 	reducers: {
 		signIn: (state, action) => {
@@ -47,5 +47,5 @@ const chatSlice = createSlice({
 })
 
 export const { signIn, logOut, changeChatUser, removeChatUser } =
-	chatSlice.actions
-export const chatReducer = chatSlice.reducer
+	userSlice.actions
+export const userReducer = userSlice.reducer

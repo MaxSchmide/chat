@@ -1,12 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
-import { chatReducer } from "./slices/chatSlice"
+import { userReducer } from "./slices/chatSlice"
+import { chatApi } from "./apis/chatApi"
 
 const store = configureStore({
 	reducer: {
-		chat: chatReducer,
+		user: userReducer,
+		[chatApi.reducerPath]: chatApi.reducer,
 	},
-	
+	middleware: (getDefaultMiddleware) => {
+		return getDefaultMiddleware().concat(chatApi.middleware)
+	},
 })
 
 export * from "./slices/chatSlice"

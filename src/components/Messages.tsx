@@ -9,7 +9,7 @@ import Message from "./Message"
 const Messages = () => {
 	const [messages, setMessages] = useState<IMessage[]>([])
 
-	const { chatId } = useSelector((state: RootState) => state.chat)
+	const { chatId } = useSelector((state: RootState) => state.user)
 
 	useEffect(() => {
 		const getMessages = () => {

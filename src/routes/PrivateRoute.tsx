@@ -6,7 +6,7 @@ type Props = {
 }
 
 const PrivateRoute = ({ children }: Props) => {
-	const { currentUser } = useSelector((state: RootState) => state.chat)
+	const { currentUser } = useSelector((state: RootState) => state.user)
 	return <>{currentUser ? children : <Navigate to="/login" />}</>
 }
 
