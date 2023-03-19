@@ -15,8 +15,8 @@ import { useSearchUserQuery } from "../store/apis/chatApi"
 
 const Search = () => {
 	const [userName, setUserName] = useState("")
-	const nameOfUser = useDebounce(userName, 500)
-	const { data } = useSearchUserQuery(nameOfUser)
+	const nameOfUser = useDebounce(userName, 800)
+	const { data, isSuccess } = useSearchUserQuery(nameOfUser)
 	const dispatch = useAppDispatch()
 	const { currentUser } = useSelector((state: RootState) => state.user)
 
@@ -72,15 +72,23 @@ const Search = () => {
 					placeholder="Find a user"
 				/>
 			</div>
-			{data &&
-				data?.map((user) => (
-					<div onClick={handleSelect} className="search__chat" key={user.uid}>
-						<img src={user.photoURL!} alt="" />
-						<div className="search__chat__info">
-							<span>{user.displayName}</span>
+			{data?.length
+				? data?.map((user) => (
+						<div onClick={handleSelect} className="search__chat" key={user.uid}>
+							<img src={user.photoURL!} alt="" />
+							<div>
+								<span>{user.displayName}</span>
+							</div>
 						</div>
-					</div>
-				))}
+				  ))
+				: nameOfUser &&
+				  isSuccess && (
+						<div className="search__fail">
+							<div>
+								<span>No matches</span>
+							</div>
+						</div>
+				  )}
 		</div>
 	)
 }

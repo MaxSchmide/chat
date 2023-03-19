@@ -13,6 +13,10 @@
 			}
 		}
 	}
+	&__fail {
+		padding: 10px;
+		color: $primary-tint2;
+	}
 	&__chat {
 		padding: 10px;
 		display: flex;

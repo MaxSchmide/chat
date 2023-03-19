@@ -129,7 +129,6 @@ const RegisterPage = () => {
 
 	useEffect(() => {
 		const unsub = async () => {
-			console.log("STARTED")
 			const res = await fetch(defaultAvatar)
 			const data = await res.blob()
 			const file = new File([data], "default.png", {
