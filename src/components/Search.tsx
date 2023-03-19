@@ -10,8 +10,12 @@ import { useSelector } from "react-redux"
 import { db } from "../firebase"
 import { useDebounce } from "../hooks/useDebounce"
 import { UserInfo } from "../models/main.model"
-import { RootState, changeChatUser, useAppDispatch } from "../store"
-import { useSearchUserQuery } from "../store/apis/chatApi"
+import {
+	RootState,
+	changeChatUser,
+	useAppDispatch,
+	useSearchUserQuery,
+} from "../store"
 
 const Search = () => {
 	const [userName, setUserName] = useState("")

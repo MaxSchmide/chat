@@ -92,7 +92,6 @@ const LoginPage = () => {
 	}
 	return (
 		<div className="form-container">
-			<Toaster />
 			<div className="form-wrapper">
 				<span className="logo">Chat</span>
 				<span className="title">Login</span>

@@ -21,6 +21,7 @@
 		flex-direction: column;
 		gap: 10px;
 		p {
+			word-break: break-all;
 			background-color: $primary;
 			color: black;
 			padding: 10px 20px;

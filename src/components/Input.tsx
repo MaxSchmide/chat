@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { TbPaperclip, TbPhotoCheck, TbPhotoPlus, TbSend } from "react-icons/tb"
 import { useSelector } from "react-redux"
-import { RootState } from "../store"
-import { useSendMessageMutation } from "../store/apis/chatApi"
+import { RootState, useSendMessageMutation } from "../store"
 
 const Input = () => {
 	const [text, setText] = useState("")

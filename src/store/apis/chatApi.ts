@@ -3,6 +3,8 @@ import {
 	Timestamp,
 	arrayUnion,
 	collection,
+	deleteDoc,
+	deleteField,
 	doc,
 	getDocs,
 	query,
@@ -108,9 +110,32 @@ const chatApi = createApi({
 					}
 				},
 			}),
+			deleteChat: builder.mutation<any, any>({
+				async queryFn({ chatId, currentUser, chatUser }) {
+					try {
+						await deleteDoc(doc(db, "chats", chatId))
+						await updateDoc(doc(db, "userChats", currentUser!.uid), {
+							[chatId]: deleteField(),
+						})
+						await updateDoc(doc(db, "userChats", chatUser!.uid), {
+							[chatId]: deleteField(),
+						})
+						return { data: null }
+					} catch (e: any) {
+						console.log(e.message)
+						return {
+							error: e.message,
+						}
+					}
+				},
+			}),
 		}
 	},
 })
-export const { useSearchUserQuery, useSendMessageMutation } = chatApi
+export const {
+	useSearchUserQuery,
+	useSendMessageMutation,
+	useDeleteChatMutation,
+} = chatApi
 
 export { chatApi }

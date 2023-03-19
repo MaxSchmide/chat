@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
-import { userReducer } from "./slices/chatSlice"
+import { userReducer } from "./slices/userSlice"
 import { chatApi } from "./apis/chatApi"
 
 const store = configureStore({
@@ -13,7 +13,8 @@ const store = configureStore({
 	},
 })
 
-export * from "./slices/chatSlice"
+export * from "./slices/userSlice"
+export * from "./apis/chatApi"
 export { store }
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppDispatch>()

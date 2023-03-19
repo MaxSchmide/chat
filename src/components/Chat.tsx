@@ -2,7 +2,12 @@ import { useState } from "react"
 import { Toaster } from "react-hot-toast"
 import { TbDots, TbUserPlus, TbVideo } from "react-icons/tb"
 import { useSelector } from "react-redux"
-import { RootState, useAppDispatch } from "../store"
+import {
+	RootState,
+	removeChatUser,
+	useAppDispatch,
+	useDeleteChatMutation,
+} from "../store"
 import Input from "./Input"
 import Messages from "./Messages"
 
@@ -11,13 +16,17 @@ const Chat = () => {
 	const { chatUser, chatId, currentUser } = useSelector(
 		(state: RootState) => state.user
 	)
-
+	const [deleteChat, _] = useDeleteChatMutation()
 	const dispatch = useAppDispatch()
 	const handleModalShown = () => {
 		setShowModal(!showModal)
 	}
 
-	const handleDeleteChat = async () => {}
+	const handleDeleteChat = () => {
+		// setShowModal(false)
+		// deleteChat({ chatUser, chatId, currentUser })
+		// dispatch(removeChatUser())
+	}
 
 	return (
 		<div className="chat">
