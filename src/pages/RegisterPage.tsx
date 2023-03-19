@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
 import { TbPhotoCheck, TbPhotoPlus } from "react-icons/tb"
 import { Link, useNavigate } from "react-router-dom"
@@ -17,6 +17,8 @@ type UserCredentials = {
 
 const reg =
 	/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const defaultAvatar =
+	"https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
 
 const RegisterPage = () => {
 	const [userCredentials, setUserCredentials] = useState<UserCredentials>({
@@ -124,6 +126,26 @@ const RegisterPage = () => {
 			toast.error("Wrong data")
 		}
 	}
+
+	useEffect(() => {
+		const unsub = async () => {
+			console.log("STARTED")
+			const res = await fetch(defaultAvatar)
+			const data = await res.blob()
+			const file = new File([data], "default.png", {
+				type: data.type || "image/jpeg",
+			})
+			setUserCredentials((prev) => {
+				return {
+					...prev,
+					file: file,
+				}
+			})
+		}
+
+		unsub()
+	}, [])
+
 	return (
 		<div className="form-container">
 			<div className="form-wrapper">
